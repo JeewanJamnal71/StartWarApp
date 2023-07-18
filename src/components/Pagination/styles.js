@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
     container: {
@@ -14,13 +15,13 @@ const styles = StyleSheet.create({
       marginHorizontal: 4,
     },
     prevButton: {
-      backgroundColor: '#ccc',
+      backgroundColor: themeColor.darkGreyColor,
     },
     nextButton: {
-      backgroundColor: '#007BFF',
+      backgroundColor: themeColor.default,
     },
     buttonText: {
-      color: 'white',
+      color: themeColor.white,
       fontWeight: 'bold',
     },
     pageText: {

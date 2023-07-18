@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 import { normalize, screenHeight, screenWidth } from "../../utils/Metrics";
+import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
     container: {
       width: screenWidth,
       height: screenHeight,
-      paddingTop: screenHeight*.05,
-      backgroundColor:'#fff'
+      paddingTop: screenHeight*.02,
+      backgroundColor: themeColor.white
     },
     headerImageStyle:{
       width: screenWidth*.9,
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     headerTextStyle:{
         fontSize:normalize(22),
         textAlign:'center',
-        color:'#111'
+        color: themeColor.black
     },
     input: {
       width: screenWidth*.9,
@@ -24,21 +25,21 @@ const styles = StyleSheet.create({
       marginTop: 16,
       paddingHorizontal: 10,
       alignSelf:'center',
-      backgroundColor:'#F7F7F9',
+      backgroundColor:themeColor.lightGreyColor,
       paddingHorizontal: 15,
       borderRadius:5
     },
     errorText: {
       width: screenWidth*.9,
       padding:5,
-      color: 'red',
+      color: themeColor.red,
       alignSelf:'center'
     },
     button: {
       marginTop:30,
       width: screenWidth*.9,
       height: screenHeight*.065,
-      backgroundColor: '#0386D0', // Customize the button background color
+      backgroundColor: themeColor.default, // Customize the button background color
       borderRadius: 5,
       padding: 10,
       alignSelf:'center',
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     },
     butttonTextStyle:{
       fontSize:15,
-      color:'#fff',
+      color: themeColor.white,
       textAlign:'center'
     },
     textStyle:{
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     },
     textFieldLabelStyle:{
       fontSize:14,
-      color:'#111'
+      color: themeColor.black
     },
     socialIconContainer:{
       width: screenWidth*.6,

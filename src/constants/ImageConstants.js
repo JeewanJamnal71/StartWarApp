@@ -5,6 +5,8 @@ const imageConstants = {
     pinterestImage: require('../res/images/linkedin.png'),
     linkedinImage: require('../res/images/pinterest.png'),
     loginBackground: require('../res/images/loginBackground.png'),
+    splashImage: require('../res/images/splash.jpg'),
+    menuIcon: require('../res/images/menu.png'),
   };
   
   export default imageConstants;

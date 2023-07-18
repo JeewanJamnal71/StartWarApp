@@ -4,6 +4,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../screens/Login/Login';
 import Dashboard from '../screens/Dashboard/Dashboard';
+import Splash from '../screens/Splash/Splash';
+import MenuComponent from '../components/MenuComponent/MenuComponent';
+import { themeColor } from '../constants/colors';
 
 const Stack = createStackNavigator();
 
@@ -16,10 +19,32 @@ function AppNavigator() {
           options={{
             headerShown: false,
           }}
-          name="Login"
-          component={Login}
+          name="Splash"
+          component={Splash}
         />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen 
+          name="Login" 
+          options={{
+            headerShown: false,
+          }} 
+          component={Login} />
+        <Stack.Screen 
+          name="Dashboard" 
+          options={{
+            title: 'Home',
+            headerStyle: {
+              backgroundColor: themeColor.default, // Set the header background color
+            }, 
+            headerTintColor: themeColor.white, // Set the header text color
+            headerTitleStyle: {
+              fontWeight: '600', // Set the header title style
+            },
+            headerLeft: () => null, // remove default back button
+            headerRight: () => (  // add custom compponent
+              <MenuComponent />
+            )
+          }}
+          component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

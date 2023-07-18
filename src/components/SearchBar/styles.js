@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { screenWidth } from "../../utils/Metrics";
+import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
     container: {
@@ -7,10 +8,10 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: 'gray',
+      borderColor: themeColor.darkGreyColor,
       borderRadius: 8,
       paddingHorizontal: 8,
-      backgroundColor: 'white',
+      backgroundColor: themeColor.white,
       alignSelf:'center'
     },
     input: {

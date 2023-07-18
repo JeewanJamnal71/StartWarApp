@@ -1,3 +1,5 @@
+import Toast from 'react-native-toast-message';
+
 export const isEmptyOrNull = input => {
   return input === null || input === undefined || input === '';
 };
@@ -33,3 +35,11 @@ export const getExtention = fileName => {
 
 export const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
 export const passwordRegex = /^(?=.*[0-9])/;
+
+export const showAlert=(type,message)=>{
+  Toast.show({
+    type: type,
+    text1: message,
+  });
+}
+

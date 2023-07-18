@@ -8,7 +8,7 @@ import Loader from '../../utils/Loader';
 const ModalComponent = (props) => {
   const {data, homeData, modalVisible, onClose,loading, error} = props;
   const B=(props)=><Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-  const _height = data?.height !== "" ? parseInt(data?.height) : data?.height;
+  const _height = data?.height !== "" ? parseInt(data?.height) : '';
   const heightInMeter = _height !== "" ? _height/100 : _height;
   let createdData = data?.created ? moment(data.created).format("DD-MM-yyyy") : "";
 
@@ -26,8 +26,8 @@ const ModalComponent = (props) => {
                     <Text style={styles.headingTextStyle}>X</Text>
                   </TouchableOpacity>
                 </View>
-                <Text style={styles.textStyle}><B>Height</B>: {heightInMeter}m</Text>
-                <Text style={styles.textStyle}><B>Mass</B>: {data?.mass}kg</Text>
+                <Text style={styles.textStyle}><B>Height</B>: {heightInMeter || '0'}m</Text>
+                <Text style={styles.textStyle}><B>Mass</B>: {data?.mass || '0'}kg</Text>
                 <Text style={styles.textStyle}><B>Created Date</B>: {createdData}</Text>
                 <Text style={styles.textStyle}><B>Number of films</B>: {data?.films?.length || '0'}</Text>
                 <Text style={styles.textStyle}><B>DOB</B>: {data?.birth_year}</Text>

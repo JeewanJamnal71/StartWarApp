@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { normalize, screenHeight, screenWidth } from "../../utils/Metrics";
+import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
     headerContainer:{
@@ -16,15 +17,15 @@ const styles = StyleSheet.create({
       height:screenHeight,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor:'#00000099'
+      backgroundColor: themeColor.modalBgColor
     },
     modalView: {
       width: screenWidth*.9,
       height:screenHeight*.6,
-      backgroundColor: 'white',
+      backgroundColor: themeColor.white,
       borderRadius: 5,
       padding: 25,
-      shadowColor: '#000',
+      shadowColor: themeColor.black,
       shadowOffset: {
         width: 0,
         height: 2,
@@ -36,12 +37,12 @@ const styles = StyleSheet.create({
     headingTextStyle: {
       fontSize:18,
       textAlign: 'center',
-      color:'#111',
+      color: themeColor.black,
       fontWeight: 'bold'
     },
     textStyle: {
       fontSize:14,
-      color:'#111',
+      color: themeColor.black,
       marginTop:5
     },
   });

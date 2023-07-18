@@ -1,17 +1,19 @@
 import { StyleSheet } from "react-native";
 import { screenWidth, screenHeight } from "../../utils/Metrics";
+import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
     mainContainer: {
       flex: 1,
-      paddingTop:screenHeight*.04,
-      height:screenHeight
+      paddingTop:screenHeight*.03,
+      height:screenHeight,
+      backgroundColor: themeColor.white
     },
     contentContainer:{
       width:screenWidth,
       alignItems:'center',
-      backgroundColor:'#fff',
-      paddingVertical:screenHeight*.04,
+      backgroundColor:themeColor.white,
+      paddingVertical:screenHeight*.02,
     },
     paginationContainer:{
       paddingVertical:10
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
     searchBarStyle:{
       width:screenWidth*.8,
       height:screenHeight*.08, 
-      borderColor:'#111',
+      borderColor:themeColor.black,
       borderWidth:1,
       alignSelf:'center',
       borderRadius:5

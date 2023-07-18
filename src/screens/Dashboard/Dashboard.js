@@ -11,6 +11,7 @@ import { searchData } from '../../redux/slices/starwarDataSlice';
 import Toast from 'react-native-toast-message';
 import Loader from '../../utils/Loader';
 import styles from './styles';
+import { showAlert } from '../../utils/Validations';
 
 const Dashboard = () => {
   const data = useSelector((state) => state.starwarReducer.starwarData);
@@ -44,16 +45,10 @@ const Dashboard = () => {
   // display error toast
   useEffect(() => {
     if(error){
-      showToast(error)
+      showAlert('error',error)
     }
   }, [error]);
 
-  const showToast = (error) => {
-    Toast.show({
-      type: 'error',
-      text1: error,
-    });
-  }
 
   const handleNextPage = async() => {
     await dispatch(fetchStarWarData({type: 'page',value: currentPage+1}));
