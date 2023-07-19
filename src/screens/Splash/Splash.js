@@ -23,7 +23,7 @@ const Splash = () => {
   const redirect=(screenName)=>{
     setTimeout(() => {
       NavigationService.replace(screenName);
-    }, 500);
+    }, 1000);
   }
 
   useEffect(()=>{

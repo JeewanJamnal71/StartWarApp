@@ -14,7 +14,7 @@ function AppNavigator() {
 
   return (
     <NavigationContainer ref={navigationRef} >
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen
           options={{
             headerShown: false,
