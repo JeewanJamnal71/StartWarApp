@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image, ActivityIndicator } from 'react-native';
+import { View, TextInput, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Image, ActivityIndicator, StatusBar } from 'react-native';
 import { storeCredentials, generateRandomToken, saveAuthToken } from '../../utils/KeychainStorage';
 import NavigationService from '../../navigation/NavigationService';
 import { usernameRegex, passwordRegex } from '../../utils/Validations';
@@ -56,7 +56,7 @@ const Login = () => {
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollView}>
           <View style={styles.container}>
             <Formik
               initialValues={formData}
