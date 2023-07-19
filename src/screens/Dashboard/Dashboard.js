@@ -76,7 +76,7 @@ const Dashboard = () => {
       dispatch(fetchStarWarData({type: 'page',value: currentPage}));
     }
     
-  },[]);
+  },[data.length]);
 
   const renderHeader=()=>{
     return(
