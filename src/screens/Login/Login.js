@@ -109,7 +109,7 @@ const Login = () => {
                   )}
 
                   <View style={styles.textFieldWrapperStyle}>
-                    <Text style={[styles.textFieldLabelStyle,{textAlign:'right'}]}><B><U>Forget Password</U></B></Text>
+                    <Text style={[styles.textFieldLabelStyle,{textAlign:'right'}]}><B><U>Forgot Password?</U></B></Text>
                   </View>
 
                   <TouchableOpacity 

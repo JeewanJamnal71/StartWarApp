@@ -40,6 +40,7 @@ const CardComponent = React.memo(props => {
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={()=>onSelectItem(item)}
+        testID='card-component'
         >
           {({ pressed }) => (
             <Animated.View
