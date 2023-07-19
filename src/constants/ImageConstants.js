@@ -7,6 +7,7 @@ const imageConstants = {
     loginBackground: require('../res/images/loginBackground.png'),
     splashImage: require('../res/images/splash.jpg'),
     menuIcon: require('../res/images/menu.png'),
+    searchIcon: require('../res/images/search.png'),
   };
   
   export default imageConstants;
