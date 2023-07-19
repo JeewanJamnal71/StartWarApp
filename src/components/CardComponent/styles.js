@@ -3,41 +3,66 @@ import { themeColor } from "../../constants/colors";
 import { normalize, screenHeight, screenWidth } from "../../utils/Metrics";
 
 const styles = StyleSheet.create({
-    container: {
-      width: screenWidth*.8,
-      justifyContent: 'center',
-      marginTop: normalize(10),
-      marginBottom: normalize(5),
-      elevation: 4,
-      borderRadius: 8,
-      backgroundColor:themeColor.white,
-      shadowColor: themeColor.black,
-      shadowOpacity: 0.3,
-      shadowOffset: { width: 0, height: 2 },
-      shadowRadius: 4,
+    rootContainerStyle:{
+      width:screenWidth*.8,
+      alignItems: 'flex-end',
+      marginTop: screenHeight*.08
     },
-    containerImg: {
-      borderTopLeftRadius: 8,
-      borderTopRightRadius: 8,
-      width: screenWidth*.8,
-      height: screenHeight*.25,
-      
+    container: {
+      width: screenWidth*.7,
+      borderRadius: normalize(25),
+      flexDirection:'row'
+    },
+    imageContainer:{
+      width: screenWidth*.25
+    },
+    imageContainer2:{
+      position:'absolute',
+      top: -screenHeight*.05,
+      left: -screenWidth*.12,
+      width: screenWidth*.34,
+      height: screenHeight*.22,
+    },
+    imgStyle: {
+      borderRadius:normalize(25),
+      width: screenWidth*.34,
+      height: screenHeight*.22,
     },
     containerTxt1: {
-      width: screenWidth*.8,
-      padding: normalize(2),
-      fontWeight:'600'
+      fontSize: 13,
+      fontWeight:'600',
+      color: themeColor.lightTextColor
     },
     containerTxt2: {
-      width: screenWidth*.8,
-      padding: normalize(2),
+      fontSize: 13,
       color: themeColor.white,
       fontWeight:'600'
     },
-    contentContainer:{
-      width:screenWidth,
-      alignItems:'center',
-      paddingVertical:screenHeight*.04
+    containerHeadingStyle1: {
+      fontSize: 16,
+      fontWeight:'bold',
+      color: themeColor.black
+    },
+    containerHeadingStyle2: {
+      fontSize: 16,
+      color: themeColor.white,
+      fontWeight:'bold',
+    },
+    textMainContainer:{
+      width: screenWidth*.4,
+      marginVertical: screenHeight*.02
+    },
+    textSubContainer:{
+      flexDirection:'row',
+      marginVertical: screenHeight*.03
+    },
+    textSubLeftContainer:{
+      borderRightWidth:1,
+      paddingRight:10
+    },
+    textSubRightContainer:{
+      borderLeftWidth:1,
+      paddingLeft:10
     }
 });
 

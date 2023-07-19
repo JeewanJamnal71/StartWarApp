@@ -109,5 +109,6 @@ export const speciesColor = {
     lightGreyColor: '#F7F7F9',  // textfield background
     darkGreyColor: '#ccc', // prev pagination button background
     modalBgColor: '#00000099',
-    red: '#ff0000' // error
+    red: '#ff0000', // error
+    lightTextColor: '#B5B5B5'
   }
