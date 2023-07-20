@@ -145,7 +145,6 @@ const Dashboard = () => {
     <View style={styles.mainContainer}>
         {renderHeader()}
         {
-          error ? <Text style={styles.textStyle}>ERROR: {error}</Text> : 
           loading ? <Loader/> : data.length > 0 ?
           <>
             <FlatList
