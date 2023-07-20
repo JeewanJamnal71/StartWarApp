@@ -2,15 +2,11 @@ import React from 'react';
 import { Modal, Text, View, TouchableOpacity } from 'react-native';
 import styles from './style';
 import { screenWidth } from '../../utils/Metrics';
-import moment from 'moment';
 import Loader from '../../utils/Loader';
 
-const ModalComponent = (props) => {
+const ModalComponent = React.memo((props) => {
   const {data, homeData, modalVisible, onClose,loading, error} = props;
   const B=(props)=><Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-  const _height = data?.height !== "" ? parseInt(data?.height) : '';
-  const heightInMeter = _height !== "" ? _height/100 : _height;
-  let createdData = data?.created ? moment(data.created).format("DD-MM-yyyy") : "";
 
   return (
       <Modal
@@ -26,11 +22,11 @@ const ModalComponent = (props) => {
                     <Text style={styles.headingTextStyle}>X</Text>
                   </TouchableOpacity>
                 </View>
-                <Text style={styles.textStyle}><B>Height</B>: {heightInMeter || '0'}m</Text>
+                <Text style={styles.textStyle}><B>Height</B>: {data.height || '0'}m</Text>
                 <Text style={styles.textStyle}><B>Mass</B>: {data?.mass || '0'}kg</Text>
-                <Text style={styles.textStyle}><B>Created Date</B>: {createdData}</Text>
-                <Text style={styles.textStyle}><B>Number of films</B>: {data?.films?.length || '0'}</Text>
-                <Text style={styles.textStyle}><B>DOB</B>: {data?.birth_year}</Text>
+                <Text style={styles.textStyle}><B>Created Date</B>: {data?.createdDate}</Text>
+                <Text style={styles.textStyle}><B>Number of films</B>: {data?.filmsLength || '0'}</Text>
+                <Text style={styles.textStyle}><B>DOB</B>: {data?.dob}</Text>
                 <Text style={[styles.headingTextStyle,{marginTop:10}]}>Homeland Details-</Text>
                 {
                   error ? <Text style={styles.textStyle}>ERROR: {error}</Text> :
@@ -46,6 +42,6 @@ const ModalComponent = (props) => {
             </View>
       </Modal>
   );
-};
+});
 
 export default ModalComponent;
