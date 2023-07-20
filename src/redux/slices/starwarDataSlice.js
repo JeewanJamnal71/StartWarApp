@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
+import HTTPService from "../../services/HttpServices";
+import { baseUrl, imageBaseUrl } from "../../constants/url";
 
 let totalItems = 0
 
@@ -12,13 +13,13 @@ const initialState = {
 };
 
 export const fetchStarWarData = createAsyncThunk('starWarDataSlice/fetchData', async (data) => {
-  try {
-    const textResponse = await axios.get(`https://swapi.dev/api/people/?page=${data.value}`);
-    if(textResponse.data && textResponse.data.results.length>0){
-      totalItems = textResponse.data.count;
+  try { 
+    const textResponse = await HTTPService.get(baseUrl+`people/?page=${data.value}`);
+    if(textResponse?.data && textResponse?.data?.results?.length>0){
+      totalItems = textResponse?.data?.count;
       const imageResponses = await Promise.all(
         textResponse.data.results.map((textItem) => {
-          return axios.get(`https://picsum.photos/v2/list?page=1&limit=${textResponse.data.results.length}`).then(response => response.data)
+          return HTTPService.get(imageBaseUrl+`${textResponse.data.results.length}`).then(response => response.data)
           .catch(error => {
             console.error(error);
             return null;
@@ -29,7 +30,7 @@ export const fetchStarWarData = createAsyncThunk('starWarDataSlice/fetchData', a
       const _mergedDataResponse = mergeData(textResponse.data.results, imageResponses[0]);
       return _mergedDataResponse;
     }else{
-      return []
+      throw new Error(textResponse);
     }
     
   } catch (error) {

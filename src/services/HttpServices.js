@@ -18,7 +18,7 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(async config => {
   //   config.baseURL = await getBaseUrl();
   //   config.cancelToken = cancelSource.getSource().token;
-  config.headers[AUTHORIZATION] = await getItem('token');
+  // config.headers[AUTHORIZATION] = await getItem('token');
   return config;
 });
 

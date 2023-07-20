@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
+import HTTPService from "../../services/HttpServices";
 
 const initialState = {
   loading: true,
@@ -9,11 +9,11 @@ const initialState = {
 
 export const fetchStarWarHomeData = createAsyncThunk('starWarHomeSlice/fetchHomeData', async (apiUrl,{ getState }) => {
   try {
-    const _response = await axios.get(apiUrl);
-    if(_response.data){
+    const _response = await HTTPService.get(apiUrl);
+    if(_response?.data && _response?.data?.name){
         return _response.data
     }else{
-        return []
+      throw new Error(_response);
     }
   }catch (error) {
     console.log(error)
