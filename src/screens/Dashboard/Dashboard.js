@@ -21,6 +21,7 @@ const Dashboard = () => {
   const homeWorldData = useSelector((state) => state.starWarHomeReducer.homeData);
   const homeWorldDataLoading = useSelector((state) => state.starWarHomeReducer.loading);
   const homeWorldDataError = useSelector((state) => state.starWarHomeReducer.error);
+  const totalPages = useSelector((state) => state.starwarReducer.totalPages);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItemData, setSelectedItemData] = useState([])
   const [selectedItemHomeData, setSelectedItemHomeData] = useState(null)
@@ -93,7 +94,7 @@ const Dashboard = () => {
     let imageUrl = item.picture ? item.picture.replace(/\/\d+\/\d+$/, "/300/400") : '';
     let _species = item?.species?.length>0 ? item?.species[0] : null;
     const _speciesId = _species ? _species.split('/').filter(Boolean).pop() : _species;
-    const _cardColor = _speciesId ? speciesColor[_speciesId] : themeColor.white
+    const _cardColor = _speciesId ? speciesColor[_speciesId] : themeColor.default
 
     let data = {
       name: item?.name,
@@ -120,6 +121,7 @@ const Dashboard = () => {
         { 
           isSearching ? null :
           isLoadingMoreItems ? <ActivityIndicator size="large" color={themeColor.default}/> : 
+          currentPage >= totalPages ? null :
           <Button 
             android_ripple={{color: themeColor.lightGreyColor, borderless: true}}
             title='Load more' 

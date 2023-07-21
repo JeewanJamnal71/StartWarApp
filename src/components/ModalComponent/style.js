@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
       shadowRadius: 4,
       elevation: 5,
     },
+    modalViewSubContainer: {
+      width:screenWidth*.8,
+      alignSelf:'center',
+      marginVertical:screenHeight*.02
+    },
     headingTextStyle: {
       width: screenWidth*.35,
       fontSize:normalize(16),

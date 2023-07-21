@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Text, View, TouchableOpacity, Image, Pressable, ScrollView } from 'react-native';
+import { Modal, Text, View, TouchableOpacity, Image, Pressable } from 'react-native';
 import styles from './style';
-import { normalize, screenHeight, screenWidth } from '../../utils/Metrics';
-import Loader from '../../utils/Loader';
+import FastImage from 'react-native-fast-image';
 import imageConstants from '../../constants/ImageConstants';
-import { themeColor } from '../../constants/colors';
 import moment from 'moment';
 
 const ModalComponent = React.memo((props) => {
@@ -24,7 +22,7 @@ const ModalComponent = React.memo((props) => {
         >
             <View style={styles.container}>
               <View style={[styles.modalView]}>
-                <View style={{width:screenWidth*.8,alignSelf:'center',marginVertical:screenHeight*.02, }}>
+                <View style={styles.modalViewSubContainer}>
                   <View style={styles.headerContainer}>
                     <TouchableOpacity onPress={()=>onClose()} style={styles.closeButtonStyle}>
                       <Text style={styles.closeButtonTextStyle}>X</Text>
@@ -39,7 +37,17 @@ const ModalComponent = React.memo((props) => {
                       <Text style={styles.headerCardContainerTitle} >Created</Text>
                       <Text style={styles.headerCardContainerText}>{moment(data?.createdDate).format("DD-MM-yyyy") || 'N/A'}</Text>              
                     </View>
-                    <Image source={data?.image ? {uri: data.image} : imageConstants.splashImage} style={styles.imageStyle}></Image>
+                    <FastImage
+                      style={styles.imageStyle}
+                      source={{
+                        uri: data?.image,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.immutable,
+                      }}
+                      resizeMode={FastImage.resizeMode.stretch}
+                      placeholderSource={imageConstants.defaultImage}
+                            defaultSource = {imageConstants.defaultImage}
+                    />
                   </View> 
 
 

@@ -1,6 +1,6 @@
 export const speciesColor = {
-    1: '#FE6360', // Red
-    2: '#0996EA', // Blue
+    1: '#CCEEBC', // Red
+    2: '#FE6360', 
     3: '#00ff00', // Green
     4: '#ff9900', // Orange
     5: '#800080', // Purple
@@ -112,5 +112,6 @@ export const speciesColor = {
     red: '#ff0000', // error
     lightTextColor: '#B5B5B5',
     fontHighLightedText: '#6E7881',
-    modalBgColor2: '#F4F5F7'
+    modalBgColor2: '#F4F5F7',
+    red2: '#FE6360'
   }

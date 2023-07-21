@@ -63,7 +63,7 @@ export const starWarDataSlice = createSlice({
       state.error = null;
     })
     .addCase(fetchStarWarData.fulfilled, (state, action) => {
-      state.totalPages = Math.ceil(totalItems/10)
+      state.totalPages = Math.ceil(totalItems/10)  // 10 number of item display at a time
       state.loading = false;
       if(state.pageNumber>1){ // if page number > 1, then concat people data
         let newValue = [...state.starwarData, ...action.payload]

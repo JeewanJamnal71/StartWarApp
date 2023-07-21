@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -14,6 +14,7 @@ import styles from './styles';
 
 const CardComponent = React.memo(props => {
   const scaleValue = useSharedValue(1);
+  const [isLongPress, setIsLongPress] = useState(false)
   let {item,onSelectItem} = props;
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -23,11 +24,13 @@ const CardComponent = React.memo(props => {
     };
   });
 
-  const handlePressIn = () => {
+  const handleLongPress = () => {
+    setIsLongPress(true)
     scaleValue.value = 1.1;
   };
 
   const handlePressOut = () => {
+    setIsLongPress(false)
     scaleValue.value = 1;
   };
   
@@ -35,9 +38,10 @@ const CardComponent = React.memo(props => {
     
     <View style={styles.rootContainerStyle}>
       <Pressable
-          onLongPress={handlePressIn}
+          onLongPress={handleLongPress}
           onPressOut={handlePressOut}
           onPress={()=>{handlePressOut();onSelectItem(item)}}
+          android_ripple={{color: isLongPress ? themeColor.white : item?.cardColor, borderless: true}}
           testID='card-component'
           >
             {({ pressed }) => (
@@ -68,20 +72,20 @@ const CardComponent = React.memo(props => {
 
                     {/* List Item right side text contant */}
                     <View style={styles.textMainContainer}>
-                        <Text style={item?.speciesId ? styles.containerHeadingStyle2 : styles.containerHeadingStyle1}>{item?.name|| "NA"}</Text>
-                        <Text style={item?.speciesId ? styles.containerTxt2 : styles.containerTxt1}>
+                        <Text style={styles.containerHeadingStyle}>{item?.name|| "NA"}</Text>
+                        <Text style={styles.containerTxt}>
                           {moment(item?.createdDate).format("DD-MM-yyyy") || "NA"}
                         </Text>
 
                         {/* Wrapper for Weight/Height text contant */}
                         <View style={styles.textSubContainer}>
-                          <View style={[styles.textSubLeftContainer,{borderColor: item?.speciesId ? themeColor.white : themeColor.black}]}>
-                            <Text style={item?.speciesId ? styles.containerHeadingStyle2 : styles.containerHeadingStyle1}>Weight</Text>
-                            <Text style={item?.speciesId ? styles.containerTxt2 : styles.containerTxt1}>{item?.mass}kg</Text>
+                          <View style={[styles.textSubLeftContainer,{borderColor: themeColor.white}]}>
+                            <Text style={styles.containerHeadingStyle}>Weight</Text>
+                            <Text style={styles.containerTxt}>{item?.mass}kg</Text>
                           </View>
-                          <View style={[styles.textSubRightContainer,{borderColor: item?.speciesId ? themeColor.white : themeColor.black}]}>
-                            <Text style={item?.speciesId ? styles.containerHeadingStyle2 : styles.containerHeadingStyle1}>Height</Text>
-                            <Text style={item?.speciesId ? styles.containerTxt2 : styles.containerTxt1}>{item?.height}m</Text>
+                          <View style={[styles.textSubRightContainer,{borderColor: themeColor.white}]}>
+                            <Text style={styles.containerHeadingStyle}>Height</Text>
+                            <Text style={styles.containerTxt}>{item?.height}m</Text>
                           </View>
                         </View>
                     </View>

@@ -28,22 +28,12 @@ const styles = StyleSheet.create({
       width: screenWidth*.34,
       height: screenHeight*.22,
     },
-    containerTxt1: {
-      fontSize: 13,
-      fontWeight:'600',
-      color: themeColor.lightTextColor
-    },
-    containerTxt2: {
+    containerTxt: {
       fontSize: 13,
       color: themeColor.white,
       fontWeight:'600'
     },
-    containerHeadingStyle1: {
-      fontSize: 16,
-      fontWeight:'bold',
-      color: themeColor.black
-    },
-    containerHeadingStyle2: {
+    containerHeadingStyle: {
       fontSize: 16,
       color: themeColor.white,
       fontWeight:'bold',
