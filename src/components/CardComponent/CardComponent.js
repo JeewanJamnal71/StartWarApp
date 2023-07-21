@@ -35,9 +35,9 @@ const CardComponent = React.memo(props => {
     
     <View style={styles.rootContainerStyle}>
       <Pressable
-          onPressIn={handlePressIn}
+          onLongPress={handlePressIn}
           onPressOut={handlePressOut}
-          onPress={()=>onSelectItem(item)}
+          onPress={()=>{handlePressOut();onSelectItem(item)}}
           testID='card-component'
           >
             {({ pressed }) => (
@@ -70,7 +70,7 @@ const CardComponent = React.memo(props => {
                     <View style={styles.textMainContainer}>
                         <Text style={item?.speciesId ? styles.containerHeadingStyle2 : styles.containerHeadingStyle1}>{item?.name|| "NA"}</Text>
                         <Text style={item?.speciesId ? styles.containerTxt2 : styles.containerTxt1}>
-                          {moment(item?.created).format("DD-MM-yyyy") || "NA"}
+                          {moment(item?.createdDate).format("DD-MM-yyyy") || "NA"}
                         </Text>
 
                         {/* Wrapper for Weight/Height text contant */}

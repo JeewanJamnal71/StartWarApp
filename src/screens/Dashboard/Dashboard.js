@@ -10,7 +10,6 @@ import { searchData, setPageNumber } from '../../redux/slices/starwarDataSlice';
 import Loader from '../../utils/Loader';
 import styles from './styles';
 import { showAlert } from '../../utils/Validations';
-import moment from 'moment';
 import { speciesColor } from '../../constants/colors';
 import { themeColor } from '../../constants/colors';
 
@@ -98,7 +97,7 @@ const Dashboard = () => {
 
     let data = {
       name: item?.name,
-      createdDate: moment(item?.created).format("DD-MM-yyyy"),
+      createdDate: item?.created,
       cardColor: _cardColor,
       height: heightInMeter,
       image: imageUrl,
@@ -106,7 +105,8 @@ const Dashboard = () => {
       speciesId: _speciesId,
       dob: item?.birth_year,
       filmsLength: item?.films.length,
-      homeworld: item?.homeworld
+      homeworld: item?.homeworld,
+      gender: item?.gender
     }
     return( 
       <CardComponent item={data} onSelectItem={onItemSelected}/>
@@ -119,8 +119,13 @@ const Dashboard = () => {
         
         { 
           isSearching ? null :
-          isLoadingMoreItems ? <ActivityIndicator size="large" color={themeColor.default}/> 
-          : <Button title='Load more' onPress={loadMoreData}></Button>
+          isLoadingMoreItems ? <ActivityIndicator size="large" color={themeColor.default}/> : 
+          <Button 
+            android_ripple={{color: themeColor.lightGreyColor, borderless: true}}
+            title='Load more' 
+            onPress={loadMoreData}
+            color= {themeColor.default}>
+          </Button>
         }
         
       </View>
@@ -161,7 +166,7 @@ const Dashboard = () => {
         }
 
         {
-          isModalVisible ? 
+          isModalVisible ?
             <ModalComponent 
               data={selectedItemData} 
               modalVisible={isModalVisible}
@@ -169,7 +174,7 @@ const Dashboard = () => {
               homeData={selectedItemHomeData}
               error={homeWorldDataError}
               onClose={closeModal} />
-          : null
+           : null
         }
         
     </View>
