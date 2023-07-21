@@ -1,25 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
+import HTTPService from "../../services/HttpServices";
+import { baseUrl, imageBaseUrl } from "../../constants/url";
 
-let totalNumberOfPages = 0
+let totalItems = 0
 
 const initialState = {
   starwarData: [],
   loading: true,
   error: null,
   pageNumber:1,
-  totalPages:0
+  totalPages: 0
 };
 
 export const fetchStarWarData = createAsyncThunk('starWarDataSlice/fetchData', async (data) => {
-  try {
-    let _params = data.type === 'search' ? data.value !== '' ? 'search' : 'page' : 'page'
-    const textResponse = await axios.get(`https://swapi.dev/api/people/?${_params}=${data.value}`);
-    if(textResponse.data && textResponse.data.results.length>0){
-      totalNumberOfPages = textResponse.data.count;
+  try { 
+    const textResponse = await HTTPService.get(baseUrl+`people/?page=${data.value}`);
+    if(textResponse?.data && textResponse?.data?.results?.length>0){
+      totalItems = textResponse?.data?.count;
       const imageResponses = await Promise.all(
         textResponse.data.results.map((textItem) => {
-          return axios.get(`https://picsum.photos/v2/list?page=1&limit=${textResponse.data.results.length}`).then(response => response.data)
+          return HTTPService.get(imageBaseUrl+`${textResponse.data.results.length}`).then(response => response.data)
           .catch(error => {
             console.error(error);
             return null;
@@ -30,7 +30,7 @@ export const fetchStarWarData = createAsyncThunk('starWarDataSlice/fetchData', a
       const _mergedDataResponse = mergeData(textResponse.data.results, imageResponses[0]);
       return _mergedDataResponse;
     }else{
-      return []
+      throw new Error(textResponse);
     }
     
   } catch (error) {
@@ -51,19 +51,26 @@ export const starWarDataSlice = createSlice({
   reducers: {
     searchData(state,action){
       state.starwarData = action.payload;
-      state.totalPages = action.payload.length
-    }
+    },
+    setPageNumber(state,action){
+      state.pageNumber = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
     .addCase(fetchStarWarData.pending, (state) => {
-      state.loading = true;
+      state.loading = state.pageNumber === 1 ? true : false;   // if page number > 1, then loader on initial fetch hide
       state.error = null;
     })
     .addCase(fetchStarWarData.fulfilled, (state, action) => {
+      state.totalPages = Math.ceil(totalItems/10)  // 10 number of item display at a time
       state.loading = false;
-      state.starwarData = action.payload;
-      state.totalPages = totalNumberOfPages;
+      if(state.pageNumber>1){ // if page number > 1, then concat people data
+        let newValue = [...state.starwarData, ...action.payload]
+        state.starwarData = newValue;
+      }else{
+        state.starwarData = action.payload;
+      }
     })
     .addCase(fetchStarWarData.rejected, (state, action) => {
       state.loading = false;
@@ -72,5 +79,5 @@ export const starWarDataSlice = createSlice({
   },
 });
 
-export const { searchData } = starWarDataSlice.actions;
+export const { searchData, setPageNumber } = starWarDataSlice.actions;
 export default starWarDataSlice;

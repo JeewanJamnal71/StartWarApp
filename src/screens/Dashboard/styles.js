@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { screenWidth, screenHeight } from "../../utils/Metrics";
+import { screenWidth, screenHeight, normalize } from "../../utils/Metrics";
 import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
       paddingVertical:screenHeight*.02,
     },
     paginationContainer:{
-      paddingVertical:10
+      marginTop: screenHeight*.04,
     },
     searchBarStyle:{
       width:screenWidth*.8,

@@ -6,8 +6,11 @@ const styles = StyleSheet.create({
     container: {
       width: screenWidth,
       height: screenHeight,
-      paddingTop: screenHeight*.02,
       backgroundColor: themeColor.white
+    },
+    scrollView:{
+      paddingVertical:screenHeight*.08,
+      backgroundColor:themeColor.white
     },
     headerImageStyle:{
       width: screenWidth*.9,

@@ -1,11 +1,11 @@
 export const speciesColor = {
-    1: '#ff0000', // Red
-    2: '#0000ff', // Blue
+    1: '#CCEEBC', // Red
+    2: '#FE6360', 
     3: '#00ff00', // Green
     4: '#ff9900', // Orange
     5: '#800080', // Purple
     6: '#ffc0cb', // Pink
-    7: '#ffff00', // Yellow
+    7: '#0AD5B8', // Yellow
     8: '#a52a2a', // Brown
     9: '#00ffff', // Cyan
     10: '#ff00ff', // Magenta
@@ -105,9 +105,13 @@ export const speciesColor = {
     white: '#ffffff', // background
     black: '#000000', // text
     black2: '#040308', // splash background
-    default: '#0386D0', // buttons, Header
+    default: '#0996EA', // buttons, Header
     lightGreyColor: '#F7F7F9',  // textfield background
     darkGreyColor: '#ccc', // prev pagination button background
     modalBgColor: '#00000099',
-    red: '#ff0000' // error
+    red: '#ff0000', // error
+    lightTextColor: '#B5B5B5',
+    fontHighLightedText: '#6E7881',
+    modalBgColor2: '#F4F5F7',
+    red2: '#FE6360'
   }

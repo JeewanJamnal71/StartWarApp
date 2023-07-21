@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Image} from 'react-native';
+import imageConstants from '../../constants/ImageConstants';
 import debounce from 'lodash/debounce';
 import styles from './styles';
 
@@ -21,13 +22,15 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <View style={styles.container}>
+      <Image 
+        source={imageConstants.searchIcon}
+        style={styles.searchIconStyle}></Image>
       <TextInput
         style={styles.input}
         placeholder="Search..."
         value={searchText}
         onChangeText={handleSearch}
       />
-      <Button title="Search" onPress={() => handleSearch(searchText)} />
     </View>
   );
 };
