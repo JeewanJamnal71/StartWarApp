@@ -10,6 +10,9 @@ const ModalComponent = React.memo((props) => {
   const B=(props)=><Text style={{fontWeight: 'bold'}}>{props.children}</Text>
   const [isHomeLandSelected, setIsHomeLandSelected] = useState(false)
 
+  let mass = data?.mass && data?.mass !== 'unknown' && data?.mass !== 'n/a' ? data?.mass+' kg' : 'N/A';
+  let height = isNaN(data?.height) ? 'N/A' : data?.height+' m' ;
+
   const selectOption=()=>{
     setIsHomeLandSelected(!isHomeLandSelected)
   }
@@ -63,11 +66,11 @@ const ModalComponent = React.memo((props) => {
                   <View style={styles.cardItemsWrapper}>
                     <View style={styles.cardItemStyle}>
                       <Text style={styles.cardHeadingStyle}>{isHomeLandSelected ? 'Name' : 'Weight'}</Text>
-                      <Text style={styles.cardTextStyle}>{isHomeLandSelected ? homeData?.name || 'N/A' : data.mass+' kg'|| '0'+' kg'}</Text>
+                      <Text style={styles.cardTextStyle}>{isHomeLandSelected ? homeData?.name || 'N/A' : mass}</Text>
                     </View>
                     <View style={styles.cardItemStyle}>
                       <Text style={styles.cardHeadingStyle}>{isHomeLandSelected ? 'Climate' : 'Height'}</Text>
-                      <Text style={styles.cardTextStyle}>{isHomeLandSelected ? homeData?.climate || 'N/A' : data.height+" m" || '0'+" m"}</Text>
+                      <Text style={styles.cardTextStyle}>{isHomeLandSelected ? homeData?.climate || 'N/A' : height}</Text>
                     </View>
                     <View style={styles.cardItemStyle}>
                       <Text style={styles.cardHeadingStyle}>{isHomeLandSelected ? 'Residents' : 'Gender'}</Text>
@@ -79,7 +82,7 @@ const ModalComponent = React.memo((props) => {
                     {
                       isHomeLandSelected ?
                       <View style={styles.cardItemStyle2}>
-                        <Text style={styles.cardHeadingStyle}>Residents</Text>
+                        <Text style={styles.cardHeadingStyle}>Terrain</Text>
                         <Text style={styles.cardTextStyle} numberOfLines={1}>{homeData?.terrain || 'N/A'}</Text>
                       </View> :
                       <View style={styles.cardItemStyle}>

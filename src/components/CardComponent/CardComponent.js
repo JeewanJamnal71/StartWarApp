@@ -14,8 +14,10 @@ import styles from './styles';
 
 const CardComponent = React.memo(props => {
   const scaleValue = useSharedValue(1);
-  const [isLongPress, setIsLongPress] = useState(false)
+  // const [isLongPress, setIsLongPress] = useState(false)
   let {item,onSelectItem} = props;
+  let mass = item?.mass && item?.mass !== 'unknown' && item?.mass !== 'n/a' ? item?.mass+' kg' : 'N/A';
+  let height = isNaN(item?.height) ? 'N/A' : item?.height+' m' ;
 
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(scaleValue.value, [1, 1.2], [1, 1.2]);
@@ -25,12 +27,12 @@ const CardComponent = React.memo(props => {
   });
 
   const handleLongPress = () => {
-    setIsLongPress(true)
+    // setIsLongPress(true)
     scaleValue.value = 1.1;
   };
 
   const handlePressOut = () => {
-    setIsLongPress(false)
+    // setIsLongPress(false)
     scaleValue.value = 1;
   };
   
@@ -41,7 +43,7 @@ const CardComponent = React.memo(props => {
           onLongPress={handleLongPress}
           onPressOut={handlePressOut}
           onPress={()=>{handlePressOut();onSelectItem(item)}}
-          android_ripple={{color: isLongPress ? themeColor.white : item?.cardColor, borderless: true}}
+          // android_ripple={{color: isLongPress ? themeColor.white : item?.cardColor, borderless: true}}
           testID='card-component'
           >
             {({ pressed }) => (
@@ -81,11 +83,11 @@ const CardComponent = React.memo(props => {
                         <View style={styles.textSubContainer}>
                           <View style={[styles.textSubLeftContainer,{borderColor: themeColor.white}]}>
                             <Text style={styles.containerHeadingStyle}>Weight</Text>
-                            <Text style={styles.containerTxt}>{item?.mass}kg</Text>
+                            <Text style={styles.containerTxt}>{mass}</Text>
                           </View>
                           <View style={[styles.textSubRightContainer,{borderColor: themeColor.white}]}>
                             <Text style={styles.containerHeadingStyle}>Height</Text>
-                            <Text style={styles.containerTxt}>{item?.height}m</Text>
+                            <Text style={styles.containerTxt}>{height}</Text>
                           </View>
                         </View>
                     </View>

@@ -44,16 +44,6 @@ const Dashboard = () => {
     }
   }, [error]);
 
-  // get homeworld updated data in modal
-  useEffect(() => {
-    if(isModalVisible){
-      if(homeWorldData){
-        setSelectedItemHomeData(homeWorldData)
-      }
-    }
-  }, [homeWorldData])
-
-
   const handleSearch = useCallback((searchItem) => {
     let searchText = searchItem ? searchItem.toLowerCase() : "";
     if(searchText !== ""){
@@ -88,9 +78,9 @@ const Dashboard = () => {
     setSelectedItemData(item);
   },[])
 
-  const renderItemList=(item)=>{
+  const renderItemList=useCallback((item)=>{
     const _height = item?.height !== "" ? parseInt(item?.height) : '';
-    const heightInMeter = _height !== "" ? _height/100 : _height;
+    const heightInMeter = typeof _height === 'number' ? _height/100 : _height;
     let imageUrl = item.picture ? item.picture.replace(/\/\d+\/\d+$/, "/300/400") : '';
     let _species = item?.species?.length>0 ? item?.species[0] : null;
     const _speciesId = _species ? _species.split('/').filter(Boolean).pop() : _species;
@@ -110,9 +100,11 @@ const Dashboard = () => {
       gender: item?.gender
     }
     return( 
-      <CardComponent item={data} onSelectItem={onItemSelected}/>
+      <View key={item.name+item.created+item.birth_year}>
+        <CardComponent item={data} onSelectItem={onItemSelected}/>
+      </View>
     )
-  }
+  },[isLoadingMoreItems])
 
   const renderFooter=()=>{
     return( 
@@ -173,7 +165,7 @@ const Dashboard = () => {
               data={selectedItemData} 
               modalVisible={isModalVisible}
               loading={homeWorldDataLoading} 
-              homeData={selectedItemHomeData}
+              homeData={homeWorldData}
               error={homeWorldDataError}
               onClose={closeModal} />
            : null
