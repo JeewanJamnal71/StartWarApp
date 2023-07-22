@@ -41,6 +41,7 @@ const ModalComponent = React.memo((props) => {
                       <Text style={styles.headerCardContainerText}>{moment(data?.createdDate).format("DD-MM-yyyy") || 'N/A'}</Text>              
                     </View>
                     <FastImage
+                      testID='profile-image'
                       style={styles.imageStyle}
                       source={{
                         uri: data?.image,

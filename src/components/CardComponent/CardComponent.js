@@ -42,15 +42,15 @@ const CardComponent = React.memo(props => {
       <Pressable
           onLongPress={handleLongPress}
           onPressOut={handlePressOut}
-          onPress={()=>{handlePressOut();onSelectItem(item)}}
+          onPress={()=>{
+            handlePressOut();
+            onSelectItem(item)
+          }}
           // android_ripple={{color: isLongPress ? themeColor.white : item?.cardColor, borderless: true}}
           testID='card-component'
           >
             {({ pressed }) => (
-              <Animated.View
-                style={[
-                  animatedStyle
-                ]}
+              <Animated.View style={[animatedStyle]}
               >
                 <Shadow>
                   <View style={[styles.container,{backgroundColor:item?.cardColor}]}>
