@@ -16,6 +16,7 @@ import { themeColor } from '../../constants/colors';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.starwarReducer.starwarData);
+  const starWarSearchData = useSelector((state) => state.starwarReducer.starwarSearchedData);
   const loading = useSelector((state) => state.starwarReducer.loading);
   const error = useSelector((state) => state.starwarReducer.error);
   const homeWorldData = useSelector((state) => state.starWarHomeReducer.homeData);
@@ -48,21 +49,10 @@ const Dashboard = () => {
     let searchText = searchItem ? searchItem.toLowerCase() : "";
     if(searchText !== ""){
       setIsSearching(true)
-      const filteredArray = data.filter((item) => {
-        const nameFilter = item.name.toLowerCase().includes(searchText);
-        const homeworldFilter = item.homeworld.toLowerCase().includes(searchText);
-        const filmsFilter = item.films.includes(searchText);
-        const speciesFilter = item.species.includes(searchText);
-      
-        return nameFilter || homeworldFilter || filmsFilter || speciesFilter;
-      });
-      dispatch(searchData(filteredArray));
     }else{
       setIsSearching(false)
-      dispatch(setPageNumber(1))
-      dispatch(fetchStarWarData({value: 1}));
     }
-    
+    dispatch(searchData(searchText));
   },[data.length]);
 
   const renderHeader=()=>{
@@ -95,7 +85,7 @@ const Dashboard = () => {
       mass: item.mass,
       speciesId: _speciesId,
       dob: item?.birth_year,
-      filmsLength: item?.films.length,
+      filmsLength: item?.films?.length,
       homeworld: item?.homeworld,
       gender: item?.gender
     }
@@ -144,8 +134,20 @@ const Dashboard = () => {
     <View style={styles.mainContainer}>
         {renderHeader()}
         {
-          loading ? <Loader/> : data.length > 0 ?
-          <>
+          loading ? <Loader/> : 
+          starWarSearchData.length > 0 ?
+            <FlatList
+              data={starWarSearchData}
+              initialNumToRender={10}
+              renderItem={({item})=>renderItemList(item)}
+              keyExtractor={(item) =>item.name+item.created+item.birth_year}
+              contentContainerStyle={styles.contentContainer}
+              onEndReachedThreshold={0}
+              windowSize={100}
+              ListFooterComponent={renderFooter}
+            />
+           : isSearching ? <Text style={styles.textStyle}>No Searched Data Found!!!</Text> :
+            data.length > 0 ?
             <FlatList
               data={data}
               initialNumToRender={10}
@@ -156,7 +158,7 @@ const Dashboard = () => {
               windowSize={100}
               ListFooterComponent={renderFooter}
             />
-          </> : <Text style={styles.textStyle}>No Data!!!</Text> 
+           : <Text style={styles.textStyle}>No Data Found!!!</Text>
         }
 
         {

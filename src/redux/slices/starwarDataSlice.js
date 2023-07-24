@@ -9,7 +9,8 @@ const initialState = {
   loading: true,
   error: null,
   pageNumber:1,
-  totalPages: 0
+  totalPages: 0,
+  starwarSearchedData: [],
 };
 
 export const fetchStarWarData = createAsyncThunk('starWarDataSlice/fetchData', async (data) => {
@@ -50,7 +51,21 @@ export const starWarDataSlice = createSlice({
   initialState,
   reducers: {
     searchData(state,action){
-      state.starwarData = action.payload;
+      let searchText = action.payload
+      if(searchText !== ""){
+        const filteredData = state.starwarData.filter((item) => {
+          const nameFilter = item.name.toLowerCase().includes(searchText);
+          // const homeworldFilter = item.homeworld.toLowerCase().includes(searchText);
+          // const filmsFilter = item.films.includes(searchText);
+          // const speciesFilter = item.species.includes(searchText);
+        
+          return nameFilter // || homeworldFilter || filmsFilter || speciesFilter;
+        });
+        state.starwarSearchedData = filteredData?.length>0 ? filteredData : [];
+      }else{
+        state.starwarSearchedData=[]
+      }
+      
     },
     setPageNumber(state,action){
       state.pageNumber = action.payload;
