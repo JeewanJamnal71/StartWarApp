@@ -37,7 +37,6 @@ const CardComponent = React.memo(props => {
   };
   
   return (
-    
     <View style={styles.rootContainerStyle}>
       <Pressable
           onLongPress={handleLongPress}

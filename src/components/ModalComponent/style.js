@@ -11,16 +11,19 @@ const styles = StyleSheet.create({
       marginBottom: 10
     },
     closeButtonStyle:{
-      width:screenWidth*.07,
+      width:screenWidth*.08,
+      height: screenHeight*.045,
       alignItems:'center',
+      justifyContent:'center',
       backgroundColor: themeColor.white,
       elevation:5,
+      padding:normalize(15),
       borderRadius: 10000000,
     },
-    closeButtonTextStyle:{
-      fontSize: normalize(15),
-      color: themeColor.black, 
-      fontWeight: 'bold'
+    closeButtonImageStyle:{
+      width: normalize(10),
+      height: normalize(10),
+      resizeMode:'contain'
     },
     container: {
       width:screenWidth,
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     modalView: {
       width: screenWidth*.9,
       backgroundColor: themeColor.modalBgColor2,
-      borderRadius: normalize(20),
+      borderRadius: normalize(10),
       shadowColor: themeColor.black,
       shadowOffset: {
         width: 0,
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
       width: screenWidth*.35,
       fontSize:normalize(16),
       color: themeColor.black,
-      fontWeight: '600'
+      fontWeight: 'bold'
     },
     textStyle: {
       fontSize:14,
@@ -71,13 +74,15 @@ const styles = StyleSheet.create({
       paddingVertical: 12
     },
     headerCardContainerTitle:{
-      fontSize: normalize(9), 
+      fontSize: normalize(12), 
       marginTop: normalize(10),
-      color: themeColor.fontHighLightedText
+      color: themeColor.black,
+      fontWeight:'bold'
     },
     headerCardContainerText:{
-      fontSize: normalize(12),
+      fontSize: normalize(9),
       color: themeColor.black,
+      color: themeColor.fontHighLightedText
     },
     imageStyle:{
       width: screenWidth*.35, 

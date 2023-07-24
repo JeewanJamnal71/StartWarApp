@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     },
     container: {
       width: screenWidth*.7,
-      borderRadius: normalize(25),
+      borderRadius: normalize(15),
       flexDirection:'row'
     },
     imageContainer:{
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
       height: screenHeight*.22,
     },
     imgStyle: {
-      borderRadius:normalize(25),
+      borderRadius:normalize(20),
       width: screenWidth*.34,
       height: screenHeight*.22,
     },

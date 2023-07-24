@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { View, FlatList, Text, ActivityIndicator, Button } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, FlatList, Text, ActivityIndicator, Button, RefreshControl, ScrollView } from 'react-native';
 import CardComponent from '../../components/CardComponent/CardComponent';
 import { fetchStarWarData } from '../../redux/slices/starwarDataSlice';
 import { fetchStarWarHomeData } from '../../redux/slices/starWarHomeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ModalComponent from '../../components/ModalComponent/ModalComponent';
-import { searchData, setPageNumber } from '../../redux/slices/starwarDataSlice';
+import { searchData, setPageNumber, filterData, resetData  } from '../../redux/slices/starwarDataSlice';
+import FilterComponent from '../../components/FilterComponent/FilterComponent';
 import Loader from '../../utils/Loader';
 import styles from './styles';
 import { showAlert } from '../../utils/Validations';
@@ -15,6 +16,8 @@ import { themeColor } from '../../constants/colors';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+
+  // reduex states
   const data = useSelector((state) => state.starwarReducer.starwarData);
   const starWarSearchData = useSelector((state) => state.starwarReducer.starwarSearchedData);
   const loading = useSelector((state) => state.starwarReducer.loading);
@@ -23,12 +26,20 @@ const Dashboard = () => {
   const homeWorldDataLoading = useSelector((state) => state.starWarHomeReducer.loading);
   const homeWorldDataError = useSelector((state) => state.starWarHomeReducer.error);
   const totalPages = useSelector((state) => state.starwarReducer.totalPages);
+
+  // states
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedItemData, setSelectedItemData] = useState([])
-  const [selectedItemHomeData, setSelectedItemHomeData] = useState(null)
   const [isSearching, setIsSearching] = useState(false)
   const [isLoadingMoreItems, setIsLoadingMoreItems] = useState(false)
-  const [isModalVisible, setIsModalVisible] = useState(false) 
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isFilterSelected, setIsFilterSelected] = useState(false)
+  const [filterType, setFilterType] = useState(null)
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(()=>{
+    dispatch(resetData())
+  },[])
 
   // fetch starwar data
   useEffect(() => {
@@ -45,6 +56,17 @@ const Dashboard = () => {
     }
   }, [error]);
 
+  const resetStates=()=>{
+    setCurrentPage(1)
+    setSelectedItemData([])
+    setIsSearching(false)
+    setIsLoadingMoreItems(false)
+    setIsModalVisible(false)
+    setIsFilterSelected(false)
+    setFilterType(null)
+    setRefreshing(false);
+  }
+
   const handleSearch = useCallback((searchItem) => {
     let searchText = searchItem ? searchItem.toLowerCase() : "";
     if(searchText !== ""){
@@ -55,9 +77,31 @@ const Dashboard = () => {
     dispatch(searchData(searchText));
   },[data.length]);
 
+   // when searching off but filter on
+  useEffect(() => {
+    if(filterType){
+      dispatch(filterData(filterType))
+    }
+  }, [isSearching]);
+
+  const onSelectFilter=useCallback((_selectedFilterType)=>{
+    if(_selectedFilterType === 'none'){
+      setIsFilterSelected(false)
+      setFilterType(null)
+      
+    }else{
+      setIsFilterSelected(true)
+      setFilterType(_selectedFilterType)
+    }
+    dispatch(filterData(_selectedFilterType))
+  },[])
+
   const renderHeader=()=>{
     return(
-      <SearchBar onSearch={handleSearch} />   
+      <View style={styles.headerContainerStyle}>
+        <SearchBar onSearch={handleSearch} />  
+        <FilterComponent onFilter={onSelectFilter} filterType={filterType}/>
+      </View> 
     )
   }
 
@@ -68,6 +112,14 @@ const Dashboard = () => {
     setSelectedItemData(item);
   },[])
 
+  const convertStarWarsDateToGregorian = (starWarsDate) => {
+    const yearsBeforeYavin = parseInt(starWarsDate, 10);
+    const battleOfYavinYear = 0; // The Battle of Yavin occurred in the year 0 BBY
+    const gregorianYear = battleOfYavinYear - yearsBeforeYavin;
+    const gregorianDate = `01-01-${gregorianYear.toString().padStart(4, '0')}`;
+    return gregorianDate;
+  };
+  
   const renderItemList=useCallback((item)=>{
     const _height = item?.height !== "" ? parseInt(item?.height) : '';
     const heightInMeter = typeof _height === 'number' ? _height/100 : _height;
@@ -101,7 +153,7 @@ const Dashboard = () => {
       <View style={styles.paginationContainer}>
         
         { 
-          isSearching ? null :
+          isSearching || isFilterSelected ? null :
           isLoadingMoreItems ? <ActivityIndicator size="large" color={themeColor.default}/> : 
           currentPage >= totalPages ? null :
           <Button 
@@ -129,9 +181,21 @@ const Dashboard = () => {
   const closeModal=useCallback(()=>{
     setIsModalVisible(false)
   },[])
+
+  const onRefresh =useCallback(() => {
+    setRefreshing(true);
+    dispatch(resetData())
+    dispatch(setPageNumber(1))
+    dispatch(fetchStarWarData({value: 1}));
+    resetStates()
+  }, []);
  
   return (
     <View style={styles.mainContainer}>
+      {/* <ScrollView style={styles.scrollViewStyle}
+        refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }> */}
         {renderHeader()}
         {
           loading ? <Loader/> : 
@@ -145,9 +209,9 @@ const Dashboard = () => {
               onEndReachedThreshold={0}
               windowSize={100}
               ListFooterComponent={renderFooter}
+              nestedScrollEnabled={true}
             />
-           : isSearching ? <Text style={styles.textStyle}>No Searched Data Found!!!</Text> :
-            data.length > 0 ?
+           : isSearching || isFilterSelected? <Text style={styles.textStyle}>No {isSearching ? 'Searched' : 'Filtered'} Data Found!!!</Text> : data.length > 0 ?
             <FlatList
               data={data}
               initialNumToRender={10}
@@ -156,9 +220,12 @@ const Dashboard = () => {
               contentContainerStyle={styles.contentContainer}
               onEndReachedThreshold={0}
               windowSize={100}
+              nestedScrollEnabled={true}
               ListFooterComponent={renderFooter}
             />
-           : <Text style={styles.textStyle}>No Data Found!!!</Text>
+           :
+           <Text style={styles.textStyle}>No Data Found!!!</Text>
+           
         }
 
         {
@@ -172,7 +239,7 @@ const Dashboard = () => {
               onClose={closeModal} />
            : null
         }
-        
+      {/* </ScrollView>   */}
     </View>
   );
 };

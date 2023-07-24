@@ -31,6 +31,17 @@ const styles = StyleSheet.create({
       alignSelf:'center',
       fontSize:16,
       marginTop:10
+    },
+    headerContainerStyle:{
+      width:screenWidth*.9, 
+      alignSelf:'center',
+      flexDirection:'row',
+      justifyContent:'space-between',
+      alignItems:'center',
+      marginBottom: screenHeight*.02,
+    },
+    scrollViewStyle:{
+      backgroundColor: themeColor.white
     }
   });
 

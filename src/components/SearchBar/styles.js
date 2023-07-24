@@ -4,7 +4,7 @@ import { themeColor } from "../../constants/colors";
 
 const styles = StyleSheet.create({
     container: {
-      width:screenWidth*.8,
+      width:screenWidth*.75,
       flexDirection: 'row',
       alignItems:'center',
       borderWidth: 1.2,

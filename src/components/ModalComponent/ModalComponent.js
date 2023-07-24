@@ -3,6 +3,7 @@ import { Modal, Text, View, TouchableOpacity, Image, Pressable } from 'react-nat
 import styles from './style';
 import FastImage from 'react-native-fast-image';
 import imageConstants from '../../constants/ImageConstants';
+import { convertStarWarsDate } from '../../utils/Validations';
 import moment from 'moment';
 
 const ModalComponent = React.memo((props) => {
@@ -12,6 +13,7 @@ const ModalComponent = React.memo((props) => {
 
   let mass = data?.mass && data?.mass !== 'unknown' && data?.mass !== 'n/a' ? data?.mass+' kg' : 'N/A';
   let height = isNaN(data?.height) ? 'N/A' : data?.height+' m' ;
+  let dob = data?.dob ? convertStarWarsDate(data?.dob) : "N/A"
 
   const selectOption=()=>{
     setIsHomeLandSelected(!isHomeLandSelected)
@@ -28,7 +30,8 @@ const ModalComponent = React.memo((props) => {
                 <View style={styles.modalViewSubContainer}>
                   <View style={styles.headerContainer}>
                     <TouchableOpacity onPress={()=>onClose()} style={styles.closeButtonStyle}>
-                      <Text style={styles.closeButtonTextStyle}>X</Text>
+                      <Image style={styles.closeButtonImageStyle}
+                       source={imageConstants.closeIcon} ></Image>
                     </TouchableOpacity>
                   </View>
 
@@ -36,9 +39,9 @@ const ModalComponent = React.memo((props) => {
                     <View style={styles.headerCardContainerTextWrapper}>
                       <Text style={styles.headingTextStyle} numberOfLines={2}>{data?.name  || 'N/A'}</Text>
                       <Text style={styles.headerCardContainerTitle} >DOB</Text>
-                      <Text style={styles.headerCardContainerText}>{data?.dob || 'N/A'}</Text>
+                      <Text style={styles.cardTextStyle}>{dob}</Text>
                       <Text style={styles.headerCardContainerTitle} >Created</Text>
-                      <Text style={styles.headerCardContainerText}>{moment(data?.createdDate).format("DD-MM-yyyy") || 'N/A'}</Text>              
+                      <Text style={styles.cardTextStyle}>{moment(data?.createdDate).format("DD-MM-yyyy") || 'N/A'}</Text>              
                     </View>
                     <FastImage
                       testID='profile-image'
@@ -50,7 +53,7 @@ const ModalComponent = React.memo((props) => {
                       }}
                       resizeMode={FastImage.resizeMode.stretch}
                       placeholderSource={imageConstants.defaultImage}
-                            defaultSource = {imageConstants.defaultImage}
+                      defaultSource = {imageConstants.defaultImage}
                     />
                   </View> 
 

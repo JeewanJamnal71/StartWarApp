@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import HTTPService from "../../services/HttpServices";
 
 const initialState = {
-  loading: true,
   error: null,
   homeData:[]
 };
@@ -30,15 +29,12 @@ export const starWarHomeSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(fetchStarWarHomeData.pending, (state) => {
-      state.loading = true;
       state.error = null;
     })
     .addCase(fetchStarWarHomeData.fulfilled, (state, action) => {
-      state.loading = false;
       state.homeData = action.payload;
     })
     .addCase(fetchStarWarHomeData.rejected, (state, action) => {
-      state.loading = false;
       state.error = action.error.message;
     });
   },

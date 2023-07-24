@@ -43,3 +43,11 @@ export const showAlert=(type,message)=>{
   });
 }
 
+export const convertStarWarsDate = (starWarsDate) => {
+  const yearsBeforeYavin = parseInt(starWarsDate, 10);
+  const battleOfYavinYear = 0; // The Battle of Yavin occurred in the year 0 BBY
+  const gregorianYear = Math.abs(battleOfYavinYear - yearsBeforeYavin) + 1;
+  const gregorianDate = `01-01-${gregorianYear.toString().padStart(4, '0')}`;
+  return gregorianDate;
+}
+

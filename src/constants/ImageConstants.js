@@ -8,6 +8,9 @@ const imageConstants = {
     splashImage: require('../res/images/splash.jpg'),
     menuIcon: require('../res/images/menu.png'),
     searchIcon: require('../res/images/search.png'),
+    filterIcon: require('../res/images/filter.png'),
+    closeIcon: require('../res/images/close.png'),
+    refreshIcon: require('../res/images/refresh.png'),
   };
   
   export default imageConstants;

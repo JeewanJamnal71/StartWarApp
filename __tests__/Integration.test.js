@@ -62,7 +62,7 @@ describe('Integration Test', () => {
 
     // DOB
     expect(getByText('DOB')).toBeTruthy();
-    expect(getByText('19BBY')).toBeTruthy();
+    expect(getByText('01-01-0020')).toBeTruthy();
 
     // Created
     expect(getByText('Created')).toBeTruthy();
