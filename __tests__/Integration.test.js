@@ -1,45 +1,95 @@
-/**
- * @format
- */
-
 import 'react-native';
 import React from 'react';
-// Note: import explicitly to use the types shiped with jest.
 import {it} from '@jest/globals';
 import { render, fireEvent } from '@testing-library/react-native';
 import CardComponent from '../src/components/CardComponent/CardComponent';
 import ModalComponent from '../src/components/ModalComponent/ModalComponent';
-import { PersonMockData, HomeworldMockData } from './MockData';
+import { personMockData, homeworldMockData } from '../__mocks__/mockData';
+
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'))
 
 describe('Integration Test', () => {
   it('should open the modal when a card is pressed', () => {
+   
     const setModalVisible = jest.fn();
     const { getByTestId } = render(
-      <CardComponent item={PersonMockData} onSelectItem={setModalVisible} />
+      <CardComponent item={personMockData} onSelectItem={setModalVisible} />
     );
     const card = getByTestId('card-component');
     fireEvent.press(card);
     expect(setModalVisible).toHaveBeenCalled();
+    
   });
 
-  it('should display the correct person information in the modal', () => {
-    const modalVisible = true;
-    const { getByText } = render(
+  it('should display the correct person information in the modal', async() => {
+  
+    const { getByText, getByTestId } = render(
       <ModalComponent
-        data={PersonMockData}
-        homeData={HomeworldMockData}
-        modalVisible={modalVisible}
+        data={personMockData}
+        homeData={homeworldMockData}
+        modalVisible={true}
         onClose={() => {}}
         loading={false}
         error={null}
       />
     );
 
-    // Check if the correct person information is displayed in the modal
+    // Get the initial text content (expect "Value is hidden")
+    const isAboutTabTextSelected = getByText('Films');
+    expect(isAboutTabTextSelected).toBeTruthy();
+    
+    const modalImageComponent = getByTestId('profile-image');
+
+    // Basic Info
+    expect(modalImageComponent.props.source.uri).toEqual('https://picsum.photos/300/400');
     expect(getByText('John Doe')).toBeTruthy();
-    // expect(getByText('Desert')).toBeTruthy();
-    // expect(getByText('Arid')).toBeTruthy();
-    // Add more expect statements to check other person information as needed
+
+    // Weight
+    expect(getByText('Weight')).toBeTruthy();
+    expect(getByText('77 kg')).toBeTruthy();
+
+    // Height
+    expect(getByText('Height')).toBeTruthy();
+    expect(getByText('1.72 m')).toBeTruthy();
+
+    // Gender
+    expect(getByText('Gender')).toBeTruthy();
+    expect(getByText('male')).toBeTruthy();
+
+    // Films
+    expect(getByText('Films')).toBeTruthy();
+    expect(getByText('2')).toBeTruthy();
+
+    // DOB
+    expect(getByText('DOB')).toBeTruthy();
+    expect(getByText('19BBY')).toBeTruthy();
+
+    // Created
+    expect(getByText('Created')).toBeTruthy();
+    expect(getByText('19-07-2023')).toBeTruthy();
+    
+    const homelandOption = getByText('Homeland');
+    fireEvent.press(homelandOption);
+
+    // HomeLand Info
+
+    // Name
+    expect(getByText('Name')).toBeTruthy();
+    expect(getByText('Tatooine')).toBeTruthy();
+
+    // Terrain
+    expect(getByText('Terrain')).toBeTruthy();
+    expect(getByText('Desert')).toBeTruthy();
+
+    //Climate
+    expect(getByText('Climate')).toBeTruthy();
+    expect(getByText('Arid')).toBeTruthy();
+
+    //Number of residents
+    expect(getByText('Residents')).toBeTruthy();
+    expect(getByText('2')).toBeTruthy();
+
   });
+
 });
 

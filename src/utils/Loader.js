@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, ActivityIndicator, Text} from 'react-native';
 import Strings from '../constants/Strings';
+import { themeColor } from '../constants/colors';
 
 const Loader = props => {
   return (
     <View style={styles.loaderContainer}>
-      <ActivityIndicator size="large" />
+      <ActivityIndicator size="large" color={themeColor.default}/>
       <Text style={styles.loaderTextStyle}>{Strings.loading}</Text>
     </View>
   );
