@@ -8,7 +8,6 @@ import debounce from 'lodash/debounce';
 import styles from './styles';
 
 const FilterComponent = React.memo(({ filterType, onFilter }) => {
-  console.log(filterType)
   const dispatch = useDispatch()
   const [showFilter, setShowFilter] = useState(false)
 

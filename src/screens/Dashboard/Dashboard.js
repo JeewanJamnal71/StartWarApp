@@ -35,7 +35,6 @@ const Dashboard = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isFilterSelected, setIsFilterSelected] = useState(false)
   const [filterType, setFilterType] = useState(null)
-  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(()=>{
     dispatch(resetData())
@@ -55,17 +54,6 @@ const Dashboard = () => {
       setIsLoadingMoreItems(false)
     }
   }, [error]);
-
-  const resetStates=()=>{
-    setCurrentPage(1)
-    setSelectedItemData([])
-    setIsSearching(false)
-    setIsLoadingMoreItems(false)
-    setIsModalVisible(false)
-    setIsFilterSelected(false)
-    setFilterType(null)
-    setRefreshing(false);
-  }
 
   const handleSearch = useCallback((searchItem) => {
     let searchText = searchItem ? searchItem.toLowerCase() : "";
@@ -181,21 +169,9 @@ const Dashboard = () => {
   const closeModal=useCallback(()=>{
     setIsModalVisible(false)
   },[])
-
-  const onRefresh =useCallback(() => {
-    setRefreshing(true);
-    dispatch(resetData())
-    dispatch(setPageNumber(1))
-    dispatch(fetchStarWarData({value: 1}));
-    resetStates()
-  }, []);
  
   return (
     <View style={styles.mainContainer}>
-      {/* <ScrollView style={styles.scrollViewStyle}
-        refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }> */}
         {renderHeader()}
         {
           loading ? <Loader/> : 
@@ -239,7 +215,6 @@ const Dashboard = () => {
               onClose={closeModal} />
            : null
         }
-      {/* </ScrollView>   */}
     </View>
   );
 };
