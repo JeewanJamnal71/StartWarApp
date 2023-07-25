@@ -65,7 +65,6 @@ export const starWarDataSlice = createSlice({
     },
     searchData(state,action){
       let searchText = action.payload
-      console.log(searchText)
       if(searchText !== ""){
         state.searchedText = searchText
         let _seachedResult = searchFilter(state,searchText)
@@ -80,7 +79,6 @@ export const starWarDataSlice = createSlice({
     },
     filterData(state,action){
       let filterType = action.payload;
-      console.log(filterType)
       if(filterType === 'none'){
         if(state.searchedText !== undefined && state.searchedText !== ""){   // filter none but search input there
           let _searchedResult = searchFilter(state, state.searchedText)
@@ -105,10 +103,16 @@ export const starWarDataSlice = createSlice({
 
         if(state.searchedText !== undefined && state.searchedText !== ""){   // filter and search together
           let dataAfterFilter = _filteredData?.length>0 ? _filteredData : [];
-          let _dataAppended = [...state.starwarSearchedData,...dataAfterFilter]
-          const duplicateRemove = Array.from(new Map(_dataAppended.map(obj => [JSON.stringify(obj), obj])).values()); // remove duplicate data
-          state.starwarSearchedData = duplicateRemove.length>0 ? duplicateRemove : [];
-          state.loading = false
+          let previousSearchData = searchFilter(state,state.searchedText)
+          if(previousSearchData.length>0){
+            let _dataAppended = [...previousSearchData,...dataAfterFilter]
+            const duplicateRemove = Array.from(new Map(_dataAppended.map(obj => [JSON.stringify(obj), obj])).values()); // remove duplicate data
+            state.starwarSearchedData = duplicateRemove.length>0 ? duplicateRemove : [];
+            state.loading = false
+          }else{
+            state.starwarSearchedData = dataAfterFilter?.length>0 ? dataAfterFilter : [];
+            state.loading = false
+          }
         }else{ // only filter, not search
           state.starwarSearchedData = _filteredData?.length>0 ? _filteredData : [];
           state.loading = false
